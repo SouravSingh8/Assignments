@@ -21,7 +21,7 @@ Assignments:-
 
 1. List the contents of a directory and their attributes
 	Ans :
-		
+		du
 
 2. Long list the content with file, directory ownership, permissions,sizes, etc...
 	Ans :
@@ -211,90 +211,229 @@ NOTE:- TAB key is your friend when it comes to command completion and having lon
 
 38. What are the different types of shell and where are they used and how do we use them?
 	Ans :
+		A shell is a program that acts as an interface between a user and the kernel
+		
+		Different types of shell are :
+			1. Bourne shell(sh) - Regarded as the first UNIX shell ever.It gained popularity due to its compact nature and high speeds of operation.
+					      The complete path-name for the Bourne shell is /bin/sh and /sbin/sh. By default, it uses the prompt # for the root
+					      user and $ for the non-root users.
+							Drawbacks - It doesn’t have in-built functionality to handle logical and arithmetic operations.
+								    Also, unlike most different types of shells in Linux, the Bourne shell cannot recall previously used commands.
+
+								    
+			2. Bourne-Again Shell(bash) - It allows us to automatically recall previously used commands and edit them with help of arrow keys, unlike the Bourne shell.
+						      The complete path-name for the GNU Bourne-Again shell is /bin/bash. By default, it uses the prompt bash-VersionNumber# for the root 						      user and bash-VersionNumber$ for the non-root users.
+
+
+			3. C Shell(csh) - The C shell was created at the University of California by Bill Joy. It is denoted as csh. It was developed to include useful programming features 					  	  like in-built support for arithmetic operations and a syntax similar to the C programming language. Further, it incorporated command history which 					  was missing in different types of shells in Linux like the Bourne shell. Another prominent feature of a C shell is “aliases”.
+					  Complete path-name for the C shell is /bin/csh. By default, it uses the prompt hostname# for the root user and hostname% for the non-rootusers.
+
+
+			4. Korn Shell(ksh) - The Korn shell was developed at AT&T Bell Labs by David Korn, to improve the Bourne shell. It allows in-built support for arithmetic operations 					     while offering interactive features which are similar to the C shell. The Korn Shell can run scripts made for Bourne Shell and C Shell. Offers 					     string, array and function manipulation similar to the C programming language. Faster than most different types of shells in Linux, including 					     the C shell.
+					     The complete path-name for the Korn shell is /bin/ksh. By default, it uses the prompt # for the root user and $ for the non-root users.
+
+
+			5. Z Shell (zsh) - The Z Shell or zsh is a sh shell extension with tons of improvements for customization. If you want a modern shell that has all the features a 					   much more, the zsh shell is what you’re looking for.
+							Features - Generate filenames based on given conditions
+								   Plugins and theming support
+								   Index of built-in functions
+								   Command completion
 
 39. What is the difference between login shell and non-login shell?
 	Ans :
+		Login Shell - A Login shell is created after a successful login of user.For example, when you login at a Linux system via terminal, SSH or switch to user with “su -”command.
+			      When a login shell start, it runs a set of predefined script to configure shell environment. To identify the login shell, run the below command on terminal.
+					echo $0
+			      If you get the result like “-bash” or “-su” means, you are on login shell. Make sure it has hyphen (-) as prefix.
+
+					A Login Shell executes following scripts:
+										Login shell executes /etc/profile
+										/etc/profile executes all scripts in /etc/profile.d/
+										Then executes users ~/.bash_profile
+										~/.bash_profile executes users ~/.bashrc
+										~/.bashrc executes /etc/bashrc
+
+		Non Login Shell - Non Login Shell is the shell, which is started by the login shell. For example, A shell which you started from another shell or started by a program etc.
+				  Non logins shell output will be bash or su(if we type echo $0)
+				 	A non login shell executes the following script to set the shell environment:
+										Non login shell first executes ~/.bashrc
+										Then ~/.bashrc executes /etc/bashrc
+										/etc/bashrc calls the scripts in /etc/profile.d
+
 40. How do we start login shell and non-login shell?
-	Ans :
+	Ans : Login shells are started when we login at Linux system via terminal. So we can switch user using the su command and a login shell will be started.
+	      We can start a non-login shell from another shell or by a program
+	      
 41. What happens when you start a login shell (which files are read and used and Why)?
 	Ans :
+		When Bash is invoked as an interactive login shell, or as a non-interactive shell with the --login option, it first reads and executes commands from the file /etc/profile, 			if that file exists. After reading that file, it looks for ~/.bash_profile, ~/.bash_login, and ~/.profile, in that order, and reads and executes commands from the first one 			that exists and is readable. The --noprofile option may be used when the shell is started to inhibit this behavior.
+
+		When an interactive login shell exits, or a non-interactive login shell executes the exit builtin command, Bash reads and executes commands from the file ~/.bash_logout, if 			it exists.
+
 42. What happens when you start a non-login shell (Which files are read and used and Why)?
 	Ans :
-39. What are Shell Configuration Files, why do we need it?
+		When an interactive shell that is not a login shell is started, Bash reads and executes commands from ~/.bashrc, if that file exists. This may be inhibited by using the --		norc option. The --rcfile file option will force Bash to read and execute commands from file instead of ~/.bashrc.
+
+		So, typically, your ~/.bash_profile contains the line
+				if [ -f ~/.bashrc ]; then . ~/.bashrc; fi
+		after (or before) any login-specific initializations.
+
+43. What are Shell Configuration Files, why do we need it?
 	Ans :
-40. Explain the Order of file usage from the system/user's home directory when user logs in to the System.
+		Shell configuration files are executed automatically when you log in and out of a shell. They initialize and configure a shell upon login and perform cleanup operations upon 		logout.
+
+44. Explain the Order of file usage from the system/user's home directory when user logs in to the System.
 	Ans :
 
-41. What are Shell Variables, list major shell variables and what do they represent?
+45. What are Shell Variables, list major shell variables and what do they represent?
 	Ans :
-42. How we see all our env variables?
+		Shell Variables − A shell variable is a special variable that is set by the shell and is required by the shell in order to function correctly. Some of these variables are 				  environment variables whereas others are local variables.
+
+46. How we see all our env variables?
 	Ans :
 		env
 
-43. How we see all env variables in alphabical order?
+47. How we see all env variables in alphabical order?
 	Ans :
 		env | sort 
 
-44. What Format does the env var and its values are stored?
+48. What Format does the env var and its values are stored?
 	Ans :
+		User level Environment variables are mostly stored in .bashrc and .profile files in your Home folder.It consist solely of uppercase letters, digits , "_"(underscore) of the characters. It will not be start with digit.
 
-45. How do you create your own varible?
+49. How do you create your own varible?
 	Ans :
 		Type the variable name(usually in capital letters), then an equal sign and lastly the variable value
 
-46. How do you start a new bash shell?
+50. How do you start a new bash shell?
 	Ans :
+		Open terminal and then type bash and then press enter to start a new bash shell
 
-47. Difference between Local/Shell variables to Global Variable
+51. Difference between Local/Shell variables to Global Variable
 	Ans :
+		Shell Variables - Shell variables are variables whose scope is in the current shell session, for example in an interactive shell session or a script.The use of shell 				  variables is to keep track of data in the current session. Shell variables usually have names with lower-case letters.
 
-48. Making a variable accessible from other the shell in the system.
-	Ans :
+		Gobal Variable/Environment Variable - An environment variable is a shell variable which has been exported. This means that it will be visible as a variable, not only in the 						      shell session that created it, but also for any process (not just shells) that are started from that session.
 
-49. Show the real life use case of exporting a variable
+52. Making a variable accessible from other the shell in the system.
 	Ans :
+		export variablename
 
-50. Convert the above script file into a command, The file should run with "myappp" instead of "myapp.sh"
+53. Show the real life use case of exporting a variable
 	Ans :
-51. What is Globbing? Explain in depth with examples?
-	Ans :
+		Export a variable(making the variable environment variable). Then open a new shell/process from the current shell and reference the variable. 
+		exporting is used for import variable value for another script. For language like bash it is very useful as it cuts down to write so many variable in 
 
-52. List all entries with extension ".sh"
+54. Convert the above script file into a command, The file should run with "myappp" instead of "myapp.sh"
+	Ans :
+		add Shebang directive(#!/bin/bash) inside the top the file. Make sure the file name is "myapp" and not "myapp.sh". Then grant the executable permission.
+		Then move the file to /usr/bin/. Your script has now turned into a command
+
+55. What is Globbing? Explain in depth with examples?
+	Ans :
+		The Bash shell feature that is used for matching or expanding specific types of patterns is called globbing. Globbing is mainly used to match filenames or searching for 			content in a file. Globbing uses wildcard characters to create the pattern.
+		
+		Examples : 
+				ls -l ????.txt
+				ls -l *.pl
+				ls -l [p-s]*
+				grep '^[P-R]' list.txt
+				grep 50$ list.txt
+
+56. List all entries with extension ".sh"
 	Ans :
 		ls -l /bin/*.sh
 
-53. List all entries with numbers in it.
+57. List all entries with numbers in it.
 	Ans :
 		ls  *[0-9]*
 
-54. List all entries that starts with a character and ends with a number
+58. List all entries that starts with a character and ends with a number
 	Ans :
-55. List all entries that name length more than 5 characters
+		ls | grep -i ^[a-z]*[0-9].txt$
+
+59. List all entries that name length more than 5 characters
 	Ans :
-56. What is Quoting? and Why do we need it?
+		find . \( -name "??????*.txt" \)
+
+60. What is Quoting? and Why do we need it?
 	Ans :
-57. Write few(minimum 3) unique examples that shows, how a particular problem is solved using Quoting.
+		Quoting is used to remove the special meaning of certain characters or words to the shell. Quoting can be used to disable special treatment for special characters, to 		prevent reserved words from being recognized as such, and to prevent parameter expansion.
+		Quoting is used in Linux to protect or limit the substitution of special character and for grouping of words.
+	
+61. Write few(minimum 3) unique examples that shows, how a particular problem is solved using Quoting.
 	Ans :
-58. How do you find a particular files/directories based on a particular search criteria?
+		echo '$PATH'
+
+		abc=9
+		echo "\$abc"
+	
+		echo 'Today'\''s Weather'
+				Today's Weather
+			 
+62. How do you find a particular files/directories based on a particular search criteria?
 	HINT:- look for commands -> locate, find and whereis
 	Ans :
-59. Write major difference between locate, find and whereis?
-	Ans :
-60. How Globbing is different from locate, find and whereis?
-	Ans :
-61. Explain the Linux File System.
-	Ans :
-62. Explain absolute and Relative Paths
-	Ans :
-63. What are the different ways of creating a File in linux System? Write an example of each and the difference between them.
-	Ans :
-64. In how many ways we can delete the files from linux system? write an example of each and the difference between them.
-	Ans :
-65. Archiving files using linux command, write a command to archive set of files from linux commands.
-	Ans :
-66. Extract the archived files from the above step.
-	Ans :
+		We use the commands find,locate,whereis along with specific patterns and types to search for files and directories	
 
+63. Write major difference between locate, find and whereis?
+	Ans :
+		find is what you use when you want to search by particular criteria and also manipulate files. It has many more options than locate so allows far more fine-grained control 			of results. It is slow because it performs the requested test(s) on every file to see if it matches.
+
+	 	locate is used to scan the whole system quickly for something - you might use this when you have no idea where something is, or when you want to find all related files 			scattered across various unknown places.
+	
+		whereis command simply returns the location of the executables, the man pages and the sources of a program.
+
+64. How Globbing is different from locate, find and whereis?
+	Ans :
+		Globbing is used to specify patterns.It is not a command.
+		locate, find and whereis are commands to find files and directories. In this commands we specify patterns to search for a file.
+
+65. Explain the Linux File System.
+	Ans :
+		Linux file system is generally a built-in layer of a Linux operating system used to handle the data management of the storage. It helps to arrange the file on the disk 			storage. It manages the file name, file size, creation date, and much more information about a file.
+		A Linux file system is a structured collection of files on a disk drive or a partition. A partition is a segment of memory and contains some specific data. In our machine, 			there can be various partitions of the memory. Generally, every partition contains a file system.
+	
+		The Linux file system contains the following sections:
+					The root directory (/)
+					A specific data storage format (EXT3, EXT4, BTRFS, XFS and so on)
+					A partition or logical volume having a particular file system
+
+66. Explain absolute and Relative Paths
+	Ans :
+		Absolute Path - Path of a file or directory from the root directory
+		Relative Path - Path related to the current working directory. Path of a file or director relative to the current working directory.
+
+67. What are the different ways of creating a File in linux System? Write an example of each and the difference between them.
+	Ans :
+		touch filename - This creates an empty file if the file does not exist. If the file exists it changes the timestamp.
+		cat filename - This creates an empty file if the file does not exist . If the file exists it shows the content of the file.
+		editor(vi,nano) filename - This creates a file and opens the specified editor to modify the file.
+
+68. In how many ways we can delete the files from linux system? write an example of each and the difference between them.
+	Ans :
+		Commands :
+				rm filename = Deletes the file
+				rm -i filename = Asks before deleting the file		
+				srm -vz filename = Deletes file securely. v option is to enable verbose mode and z-wipes the last write with zeros instead of random data 
+				wipe -rfi filename = A Linux wipe command securely erases files from magnetic memory and thereby making it impossible to recover deleted files or directory 						     content.
+							Options :
+									-r – tells wipe to recurse into subdirectories
+									-f – enables forced deletion and disable confirmation query
+									-i – shows progress of deletion process
+
+69. Archiving files using linux command, write a command to archive set of files from linux commands.
+	Ans :
+		tar cvf archivename.tar file1.txt file2.txt file3.txt
+		
+			Options :
+					c = to create a tar file
+					f = file with this name
+					v = verbose
+
+70. Extract the archived files from the above step.
+	Ans :
+		tar xvf archivename.tar
 
 
 

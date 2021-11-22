@@ -37,8 +37,13 @@ Analyzing Text:-
 			tail -4 is used to select only the last 4 lines of the output of the first command.
 
 3. From the data.txt file, extract last 3 columns
-	
+	Ans :
+		awk '{print $(NF - 2) " " $(NF - 1) " " $NF}' data.txt
+			NF represents the last column
+
 4. Sort the content of the file alphabetically based on first character in the file
+	Ans :
+		sort -dk 1.1 data.txt
 
 5. Sort the content of the file numerically
 	Ans :
@@ -137,6 +142,8 @@ NOTE:-I often find people try and write their pipes all out in one go and make a
 		ls -la /etc | grep ^d && ls -la /etc | grep -v ^d | sort
 
 16. Long List the content of "/etc" directory, but make sure you view it comfortably
+	Ans :
+		ls -lh /etc
 
 17. Identify all files in your home directory which the group has write permission for.
 	Ans :
@@ -144,7 +151,7 @@ NOTE:-I often find people try and write their pipes all out in one go and make a
 
 18. Create a listing of every user which owns a file in a given directory as well as how many files and directories they own.
 	Ans :
-		
+		ls -l directorypath | awk '{print $3}' | uniq -c
 
 19. Get a count of how many files and directories you have the execute permission for in your home directory.
 	Ans :
@@ -156,21 +163,534 @@ NOTE:-I often find people try and write their pipes all out in one go and make a
 Let's play with some patterns.
 
 1. A good directory to play with is /etc which is a directory containing config files for the system. As a normal user you may view the files but you can't make any changes so we can't do any harm. Do a listing of that directory to see what's there. Then pick various subsets of files and see if you can create a pattern to select only those files.
+	Ans :
+		ls -l /etc | awk '{print $NF}'
+856
+NetworkManager
+PackageKit
+X11
+adduser.conf
+aliases
+aliases.db
+alternatives
+apparmor
+apparmor.d
+apport
+apt
+at.deny
+bash.bashrc
+bash_completion
+bash_completion.d
+bindresvport.blacklist
+binfmt.d
+byobu
+ca-certificates
+ca-certificates.conf
+ca-certificates.conf.dpkg-old
+calendar
+cloud
+console-setup
+cron.d
+cron.daily
+cron.hourly
+cron.monthly
+cron.weekly
+crontab
+cryptsetup-initramfs
+crypttab
+dbus-1
+dconf
+debconf.conf
+debian_version
+default
+deluser.conf
+depmod.d
+dhcp
+dpkg
+e2scrub.conf
+ec2_version
+environment
+ethertypes
+fonts
+fstab
+fuse.conf
+fwupd
+gai.conf
+groff
+group
+group-
+gshadow
+gshadow-
+gss
+hdparm.conf
+host.conf
+hostname
+hosts
+hosts.allow
+hosts.deny
+init.d
+initramfs-tools
+inputrc
+insserv.conf.d
+iproute2
+iscsi
+issue
+issue.net
+kernel
+kernel-img.conf
+landscape
+ld.so.cache
+ld.so.conf
+ld.so.conf.d
+ldap
+legal
+libaudit.conf
+libblockdev
+locale.alias
+locale.gen
+/usr/share/zoneinfo/Asia/Calcutta
+logcheck
+login.defs
+logrotate.conf
+logrotate.d
+lsb-release
+ltrace.conf
+lvm
+machine-id
+magic
+magic.mime
+mailcap
+mailcap.order
+mailname
+manpath.config
+mdadm
+mime.types
+mke2fs.conf
+modprobe.d
+modules
+modules-load.d
+../proc/self/mounts
+multipath.conf
+mysql
+nanorc
+netplan
+network
+networkd-dispatcher
+networks
+newt
+nsswitch.conf
+opt
+../usr/lib/os-release
+overlayroot.conf
+overlayroot.local.conf
+pam.conf
+pam.d
+passwd
+passwd-
+perl
+pki
+pm
+polkit-1
+pollinate
+popularity-contest.conf
+postfix
+ppp
+profile
+profile.d
+protocols
+pulse
+python3
+python3.8
+rc0.d
+rc1.d
+rc2.d
+rc3.d
+rc4.d
+rc5.d
+rc6.d
+rcS.d
+/mnt/wsl/resolv.conf
+resolvconf
+/usr/sbin/rmt
+rpc
+rsyslog.conf
+rsyslog.d
+screenrc
+security
+selinux
+sensors.d
+sensors3.conf
+services
+shadow
+shadow-
+shells
+skel
+sos
+ssh
+ssl
+subgid
+subgid-
+subuid
+subuid-
+sudoers
+sudoers.d
+sysctl.conf
+sysctl.d
+systemd
+terminfo
+timezone
+tmpfiles.d
+ubuntu-advantage
+ucf.conf
+udev
+udisks2
+ufw
+update-manager
+update-motd.d
+update-notifier
+vim
+vmware-tools
+/etc/alternatives/vtrgb
+vulkan
+wgetrc
+xattr.conf
+xdg
+zsh_command_not_found
+
+
+
+
+
+		ls -l /etc/*.conf | awk '{print $NF}'
+/etc/adduser.conf
+/etc/ca-certificates.conf
+/etc/debconf.conf
+/etc/deluser.conf
+/etc/e2scrub.conf
+/etc/fuse.conf
+/etc/gai.conf
+/etc/hdparm.conf
+/etc/host.conf
+/etc/kernel-img.conf
+/etc/ld.so.conf
+/etc/libaudit.conf
+/etc/logrotate.conf
+/etc/ltrace.conf
+/etc/mke2fs.conf
+/etc/multipath.conf
+/etc/nsswitch.conf
+/etc/overlayroot.conf
+/etc/overlayroot.local.conf
+/etc/pam.conf
+/etc/popularity-contest.conf
+/mnt/wsl/resolv.conf
+/etc/rsyslog.conf
+/etc/sensors3.conf
+/etc/sysctl.conf
+/etc/ucf.conf
+/etc/xattr.conf
+
+
 
 2. Do a listing of /etc with only files that contain an extension.
-
+	Ans :
+		ls -ld /etc/*.* | awk '{print $NF}'
+/etc/adduser.conf
+/etc/aliases.db
+/etc/apparmor.d
+/etc/at.deny
+/etc/bash.bashrc
+/etc/bash_completion.d
+/etc/bindresvport.blacklist
+/etc/binfmt.d
+/etc/ca-certificates.conf
+/etc/ca-certificates.conf.dpkg-old
+/etc/cron.d
+/etc/cron.daily
+/etc/cron.hourly
+/etc/cron.monthly
+/etc/cron.weekly
+/etc/debconf.conf
+/etc/deluser.conf
+/etc/depmod.d
+/etc/e2scrub.conf
+/etc/fuse.conf
+/etc/gai.conf
+/etc/hdparm.conf
+/etc/host.conf
+/etc/hosts.allow
+/etc/hosts.deny
+/etc/init.d
+/etc/insserv.conf.d
+/etc/issue.net
+/etc/kernel-img.conf
+/etc/ld.so.cache
+/etc/ld.so.conf
+/etc/ld.so.conf.d
+/etc/libaudit.conf
+/etc/locale.alias
+/etc/locale.gen
+/etc/login.defs
+/etc/logrotate.conf
+/etc/logrotate.d
+/etc/ltrace.conf
+/etc/magic.mime
+/etc/mailcap.order
+/etc/manpath.config
+/etc/mime.types
+/etc/mke2fs.conf
+/etc/modprobe.d
+/etc/modules-load.d
+/etc/multipath.conf
+/etc/nsswitch.conf
+/etc/overlayroot.conf
+/etc/overlayroot.local.conf
+/etc/pam.conf
+/etc/pam.d
+/etc/popularity-contest.conf
+/etc/profile.d
+/etc/python3.8
+/etc/rc0.d
+/etc/rc1.d
+/etc/rc2.d
+/etc/rc3.d
+/etc/rc4.d
+/etc/rc5.d
+/etc/rc6.d
+/etc/rcS.d
+/mnt/wsl/resolv.conf
+/etc/rsyslog.conf
+/etc/rsyslog.d
+/etc/sensors.d
+/etc/sensors3.conf
+/etc/sudoers.d
+/etc/sysctl.conf
+/etc/sysctl.d
+/etc/tmpfiles.d
+/etc/ucf.conf
+/etc/update-motd.d
+/etc/xattr.conf
+	
+	
 3. What about only a 3 letter extension?
+	Ans :
+		find /etc -name "*.???"
+/etc/postfix/makedefs.out
+/etc/pollinate/entropy.ubuntu.com.pem
+/etc/dpkg/dpkg.cfg
+/etc/apparmor.d/usr.bin.man
+/etc/apparmor.d/abstractions/freedesktop.org
+/etc/apparmor.d/local/usr.bin.man
+/etc/libblockdev/conf.d/00-default.cfg
+/etc/cloud/cloud.cfg
+/etc/cloud/cloud.cfg.d/05_logging.cfg
+/etc/cloud/cloud.cfg.d/90_dpkg.cfg
+/etc/console-setup/compose.CP1255.inc
+/etc/console-setup/compose.TIS-620.inc
+/etc/console-setup/compose.CP1251.inc
+/etc/console-setup/compose.ISO-8859-9.inc
+/etc/console-setup/ISO-8859-1.acm
+/etc/console-setup/compose.KOI8-U.inc
+/etc/console-setup/compose.KOI8-R.inc
+/etc/console-setup/compose.ARMSCII-8.inc
+/etc/console-setup/compose.CP1256.inc
+/etc/console-setup/compose.ISO-8859-3.inc
+/etc/console-setup/compose.ISO-8859-7.inc
+/etc/console-setup/compose.ISIRI-3342.inc
+/etc/console-setup/compose.VISCII.inc
+/etc/console-setup/compose.ISO-8859-16.inc
+/etc/console-setup/compose.ISO-8859-2.inc
+/etc/console-setup/compose.ISO-8859-14.inc
+/etc/console-setup/remap.inc
+/etc/console-setup/compose.ISO-8859-4.inc
+/etc/console-setup/vtrgb.vga
+/etc/console-setup/compose.ISO-8859-10.inc
+/etc/console-setup/compose.GEORGIAN-PS.inc
+/etc/console-setup/compose.ISO-8859-6.inc
+/etc/console-setup/compose.GEORGIAN-ACADEMY.inc
+/etc/console-setup/compose.IBM1133.inc
+/etc/console-setup/compose.ISO-8859-5.inc
+/etc/console-setup/compose.ISO-8859-15.inc
+/etc/console-setup/compose.ISO-8859-11.inc
+/etc/console-setup/compose.ISO-8859-13.inc
+/etc/console-setup/compose.ISO-8859-8.inc
+/etc/console-setup/compose.ISO-8859-1.inc
+/etc/apt/trusted.gpg.d/ubuntu-keyring-2012-archive.gpg
+/etc/apt/trusted.gpg.d/ubuntu-keyring-2012-cdimage.gpg
+/etc/apt/trusted.gpg.d/ubuntu-keyring-2018-archive.gpg
+/etc/update-manager/release-upgrades.d/ubuntu-advantage-upgrades.cfg
+/etc/X11/rgb.txt
+/etc/mysql/my.cnf
+/etc/mysql/conf.d/mysqldump.cnf
+/etc/mysql/conf.d/mysql.cnf
+/etc/vmware-tools/vgauth/schemas/catalog.xml
+/etc/vmware-tools/vgauth/schemas/xenc-schema.xsd
+/etc/vmware-tools/vgauth/schemas/XMLSchema.xsd
+/etc/vmware-tools/vgauth/schemas/xmldsig-core-schema.xsd
+/etc/vmware-tools/vgauth/schemas/xml.xsd
+/etc/vmware-tools/vgauth/schemas/saml-schema-assertion-2.0.xsd
+/etc/vmware-tools/vgauth/schemas/datatypes.dtd
+/etc/vmware-tools/vgauth/schemas/XMLSchema-instance.xsd
+/etc/vmware-tools/vgauth/schemas/XMLSchema-hasFacetAndProperty.xsd
+/etc/vmware-tools/vgauth/schemas/XMLSchema.dtd
+/etc/locale.gen
+/etc/pki/fwupd/LVFS-CA.pem
+/etc/pki/fwupd-metadata/LVFS-CA.pem
+/etc/ssl/private/ssl-cert-snakeoil.key
+/etc/ssl/certs/Buypass_Class_2_Root_CA.pem
+/etc/ssl/certs/Microsec_e-Szigno_Root_CA_2009.pem
+/etc/ssl/certs/XRamp_Global_CA_Root.pem
+/etc/ssl/certs/Certigna_Root_CA.pem
+/etc/ssl/certs/TrustCor_RootCert_CA-2.pem
+/etc/ssl/certs/Network_Solutions_Certificate_Authority.pem
+/etc/ssl/certs/VeriSign_Universal_Root_Certification_Authority.pem
+/etc/ssl/certs/Staat_der_Nederlanden_Root_CA_-_G3.pem
+/etc/ssl/certs/Entrust_Root_Certification_Authority_-_G4.pem
+/etc/ssl/certs/T-TeleSec_GlobalRoot_Class_3.pem
+/etc/ssl/certs/QuoVadis_Root_CA_1_G3.pem
+/etc/ssl/certs/Global_Chambersign_Root_-_2008.pem
+/etc/ssl/certs/Cybertrust_Global_Root.pem
+/etc/ssl/certs/AC_RAIZ_FNMT-RCM.pem
+/etc/ssl/certs/USERTrust_RSA_Certification_Authority.pem
+/etc/ssl/certs/SSL.com_EV_Root_Certification_Authority_RSA_R2.pem
+/etc/ssl/certs/CFCA_EV_ROOT.pem
+/etc/ssl/certs/D-TRUST_Root_Class_3_CA_2_EV_2009.pem
+/etc/ssl/certs/DigiCert_High_Assurance_EV_Root_CA.pem
+/etc/ssl/certs/DigiCert_Assured_ID_Root_CA.pem
+/etc/ssl/certs/GTS_Root_R4.pem
+/etc/ssl/certs/Go_Daddy_Root_Certificate_Authority_-_G2.pem
+/etc/ssl/certs/Actalis_Authentication_Root_CA.pem
+/etc/ssl/certs/Hongkong_Post_Root_CA_3.pem
+/etc/ssl/certs/GlobalSign_Root_CA_-_R3.pem
+/etc/ssl/certs/Security_Communication_Root_CA.pem
+/etc/ssl/certs/GTS_Root_R3.pem
+/etc/ssl/certs/TrustCor_ECA-1.pem
+/etc/ssl/certs/GlobalSign_ECC_Root_CA_-_R5.pem
+/etc/ssl/certs/ssl-cert-snakeoil.pem
+/etc/ssl/certs/Trustwave_Global_ECC_P256_Certification_Authority.pem
+/etc/ssl/certs/Amazon_Root_CA_2.pem
+/etc/ssl/certs/Certigna.pem
+/etc/ssl/certs/GlobalSign_Root_CA.pem
+/etc/ssl/certs/GlobalSign_ECC_Root_CA_-_R4.pem
+/etc/ssl/certs/COMODO_RSA_Certification_Authority.pem
+/etc/ssl/certs/DigiCert_Global_Root_G2.pem
+/etc/ssl/certs/SecureSign_RootCA11.pem
+/etc/ssl/certs/SZAFIR_ROOT_CA2.pem
+/etc/ssl/certs/Autoridad_de_Certificacion_Firmaprofesional_CIF_A62634068.pem
+/etc/ssl/certs/GTS_Root_R2.pem
+/etc/ssl/certs/AffirmTrust_Premium_ECC.pem
+/etc/ssl/certs/Trustwave_Global_Certification_Authority.pem
+/etc/ssl/certs/SSL.com_Root_Certification_Authority_ECC.pem
+/etc/ssl/certs/DigiCert_Trusted_Root_G4.pem
+/etc/ssl/certs/NAVER_Global_Root_Certification_Authority.pem
+/etc/ssl/certs/Baltimore_CyberTrust_Root.pem
+/etc/ssl/certs/E-Tugra_Certification_Authority.pem
+/etc/ssl/certs/T-TeleSec_GlobalRoot_Class_2.pem
+/etc/ssl/certs/Certum_Trusted_Network_CA.pem
+/etc/ssl/certs/SwissSign_Gold_CA_-_G2.pem
+/etc/ssl/certs/Hongkong_Post_Root_CA_1.pem
+/etc/ssl/certs/Entrust_Root_Certification_Authority.pem
+/etc/ssl/certs/USERTrust_ECC_Certification_Authority.pem
+/etc/ssl/certs/emSign_ECC_Root_CA_-_G3.pem
+/etc/ssl/certs/Microsoft_ECC_Root_Certificate_Authority_2017.pem
+/etc/ssl/certs/Trustwave_Global_ECC_P384_Certification_Authority.pem
+/etc/ssl/certs/DigiCert_Global_Root_G3.pem
+/etc/ssl/certs/ISRG_Root_X1.pem
+/etc/ssl/certs/SSL.com_EV_Root_Certification_Authority_ECC.pem
+/etc/ssl/certs/GDCA_TrustAUTH_R5_ROOT.pem
+/etc/ssl/certs/Go_Daddy_Class_2_CA.pem
+/etc/ssl/certs/GTS_Root_R1.pem
+/etc/ssl/certs/COMODO_ECC_Certification_Authority.pem
+/etc/ssl/certs/NetLock_Arany_=Class_Gold=_Főtanúsítvány.pem
+/etc/ssl/certs/emSign_Root_CA_-_G1.pem
+/etc/ssl/certs/UCA_Global_G2_Root.pem
+/etc/ssl/certs/QuoVadis_Root_CA_2_G3.pem
+/etc/ssl/certs/Certum_Trusted_Network_CA_2.pem
+/etc/ssl/certs/IdenTrust_Public_Sector_Root_CA_1.pem
+/etc/ssl/certs/Entrust.net_Premium_2048_Secure_Server_CA.pem
+/etc/ssl/certs/QuoVadis_Root_CA_2.pem
+/etc/ssl/certs/ACCVRAIZ1.pem
+/etc/ssl/certs/TeliaSonera_Root_CA_v1.pem
+/etc/ssl/certs/SecureTrust_CA.pem
+/etc/ssl/certs/OISTE_WISeKey_Global_Root_GB_CA.pem
+/etc/ssl/certs/ePKI_Root_Certification_Authority.pem
+/etc/ssl/certs/AffirmTrust_Networking.pem
+/etc/ssl/certs/TWCA_Global_Root_CA.pem
+/etc/ssl/certs/Hellenic_Academic_and_Research_Institutions_ECC_RootCA_2015.pem
+/etc/ssl/certs/Staat_der_Nederlanden_EV_Root_CA.pem
+/etc/ssl/certs/QuoVadis_Root_CA_3_G3.pem
+/etc/ssl/certs/TUBITAK_Kamu_SM_SSL_Kok_Sertifikasi_-_Surum_1.pem
+/etc/ssl/certs/D-TRUST_Root_Class_3_CA_2_2009.pem
+/etc/ssl/certs/Chambers_of_Commerce_Root_-_2008.pem
+/etc/ssl/certs/certSIGN_ROOT_CA.pem
+/etc/ssl/certs/emSign_Root_CA_-_C1.pem
+/etc/ssl/certs/QuoVadis_Root_CA.pem
+/etc/ssl/certs/GlobalSign_Root_CA_-_R6.pem
+/etc/ssl/certs/Amazon_Root_CA_1.pem
+/etc/ssl/certs/Trustis_FPS_Root_CA.pem
+/etc/ssl/certs/DST_Root_CA_X3.pem
+/etc/ssl/certs/TWCA_Root_Certification_Authority.pem
+/etc/ssl/certs/IdenTrust_Commercial_Root_CA_1.pem
+/etc/ssl/certs/Starfield_Root_Certificate_Authority_-_G2.pem
+/etc/ssl/certs/SwissSign_Silver_CA_-_G2.pem
+/etc/ssl/certs/certSIGN_Root_CA_G2.pem
+/etc/ssl/certs/e-Szigno_Root_CA_2017.pem
+/etc/ssl/certs/DigiCert_Assured_ID_Root_G3.pem
+/etc/ssl/certs/COMODO_Certification_Authority.pem
+/etc/ssl/certs/Buypass_Class_3_Root_CA.pem
+/etc/ssl/certs/AffirmTrust_Premium.pem
+/etc/ssl/certs/CA_Disig_Root_R2.pem
+/etc/ssl/certs/QuoVadis_Root_CA_3.pem
+/etc/ssl/certs/UCA_Extended_Validation_Root.pem
+/etc/ssl/certs/Amazon_Root_CA_3.pem
+/etc/ssl/certs/emSign_ECC_Root_CA_-_C3.pem
+/etc/ssl/certs/GeoTrust_Primary_Certification_Authority_-_G2.pem
+/etc/ssl/certs/Secure_Global_CA.pem
+/etc/ssl/certs/Amazon_Root_CA_4.pem
+/etc/ssl/certs/Comodo_AAA_Services_root.pem
+/etc/ssl/certs/DigiCert_Assured_ID_Root_G2.pem
+/etc/ssl/certs/Starfield_Services_Root_Certificate_Authority_-_G2.pem
+/etc/ssl/certs/AffirmTrust_Commercial.pem
+/etc/ssl/certs/Starfield_Class_2_CA.pem
+/etc/ssl/certs/Sonera_Class_2_Root_CA.pem
+/etc/ssl/certs/EC-ACC.pem
+/etc/ssl/certs/TrustCor_RootCert_CA-1.pem
+/etc/ssl/certs/ca-certificates.crt
+/etc/ssl/certs/Security_Communication_RootCA2.pem
+/etc/ssl/certs/Entrust_Root_Certification_Authority_-_EC1.pem
+/etc/ssl/certs/DigiCert_Global_Root_CA.pem
+/etc/ssl/certs/Hellenic_Academic_and_Research_Institutions_RootCA_2011.pem
+/etc/ssl/certs/GlobalSign_Root_CA_-_R2.pem
+/etc/ssl/certs/OISTE_WISeKey_Global_Root_GC_CA.pem
+/etc/ssl/certs/Hellenic_Academic_and_Research_Institutions_RootCA_2015.pem
+/etc/ssl/certs/SSL.com_Root_Certification_Authority_RSA.pem
+/etc/ssl/certs/Izenpe.com.pem
+/etc/ssl/certs/Entrust_Root_Certification_Authority_-_G2.pem
+/etc/ssl/certs/Microsoft_RSA_Root_Certificate_Authority_2017.pem
+/etc/ssl/certs/Atos_TrustedRoot_2011.pem
+/etc/ssl/openssl.cnf
+/etc/default/grub.d/50-cloudimg-settings.cfg
+/etc/perl/Net/libnet.cfg
+/etc/issue.net
+/etc/profile.d/gawk.csh
+/etc/alternatives/my.cnf
+
 
 4. How about files whose name contains an uppercase letter? (hint: [[:upper:]] may be useful here)
+	Ans :
+		ls -d /etc/*[[:upper:]]*
+/etc/NetworkManager  /etc/PackageKit  /etc/X11  /etc/rcS.d
 
 5. Can you list files whose name is 4 characters long?
-
+	Ans :
+		ls -d /etc/????.*
+/etc/bash.bashrc  /etc/cron.d  /etc/cron.daily  /etc/cron.hourly  /etc/cron.monthly  /etc/cron.weekly  /etc/fuse.conf  /etc/host.conf  /etc/init.d  /etc/mime.types
 
 ----Activities
 Let's mangle some data. You can use the plato_republic.txt file
 
 1. Now play with each of the programs below. Make sure you use both relative and absolute paths.
-	head
+	head 
 	tail
 	sort
 	nl
@@ -189,11 +709,13 @@ Have a look at the man page for each of the programs and try at least 2 of the c
 Let's identify some information. You can use the plato_republic.txt file
 
 1. Now play with some of the examples of grep command with regular expressions.
+	Ans :
+		grep  H[abe] plato_republic.txt
 
 2. Have a look at the man page for "egrep" and try atleast 2 of the command line options for them.
-
-
-
+	Ans :
+		egrep -c "^He" plato_republic.txt
+		egrep -i "^he" plato_republic.txt
 
 
 -----VI/VIM Editor
@@ -548,13 +1070,238 @@ It is typical for a system to run a webserver and allow users to each have their
 Let's play with some permissions.
 
 1. First off, take a look at the permissions of your home directory, then have a look at the permissions of various files in there.
+	Ans : 
+			ls -ld sourav
+			drwxr-xr-x 6 sourav sourav 4096 Nov  3 11:39 sourav
+
+			ls -l sourav
+			total 8
+			drwxrwxr-x 6 sourav sourav 4096 Nov  3 08:24 dev
+			-rwxr-xr-x 1 sourav sourav  478 Oct 30 15:29 myBackup
 
 2. Now let's go into your any directory of your choice and change the permissions of some of the files in there. Make sure you use both the shorthand and longhand form for setting permissions and that you also use a variety of absolute and relative paths. Try removing the read permission from a file then reading it. Or removing the write permission and then opening it in vi.
+	Ans :
+			ls -l file1.txt
+			-rw-rw-r-- 1 sourav sourav 241 Nov  4 11:10 file1.txt
+
+			chmod u-r file1.txt
+			ls -l file1.txt
+			--w-rw-r-- 1 sourav sourav 241 Nov  4 11:10 file1.txt
+
+			vi file1.txt - After typing this command it shows permission denied
+
+			chmod 664 file1.txt
+			-rw-rw-r-- 1 sourav sourav 241 Nov  4 11:10 file1.txt
 
 3. Let's play with directories now. Create a directory and put some files into it. Now play about with removing various permissions from yourself on that directory and see what you can and can't do.
+	Ans :
+		mkdir temp
+		cd temp
+		touch file1.txt file2.txt file3.txt
+		cd ..
+		$ ls -ld temp
+			drwxr-xr-x 2 sourav sourav 4096 Nov 15 19:00 temp
+		chmod u-rwx temp
+		ls -ld temp
+			d---r-xr-x 2 sourav sourav 4096 Nov 15 19:00 temp
+		cd temp
+			-bash: cd: temp: Permission denied
+		rm -rf temp
+			rm: cannot remove 'temp': Permission denied
 
 4. Finally, have an explore around the system and see what the general permissions are for files in other system directories such as /etc and /bin
-
+	Ans :
+total 856
+drwxr-xr-x 3 root root       4096 Aug 20 03:12 NetworkManager
+drwxr-xr-x 2 root root       4096 Aug 20 03:13 PackageKit
+drwxr-xr-x 7 root root       4096 Aug 20 03:50 X11
+-rw-r--r-- 1 root root       3028 Aug 20 03:10 adduser.conf
+-rw-r--r-- 1 root root         51 Oct 30 15:34 aliases
+-rw-r--r-- 1 root root      12288 Oct 30 15:34 aliases.db
+drwxr-xr-x 2 root root       4096 Oct 30 15:34 alternatives
+drwxr-xr-x 3 root root       4096 Aug 20 03:12 apparmor
+drwxr-xr-x 7 root root       4096 Aug 20 03:12 apparmor.d
+drwxr-xr-x 3 root root       4096 Aug 20 03:12 apport
+drwxr-xr-x 7 root root       4096 Aug 20 03:10 apt
+-rw-r----- 1 root daemon      144 Nov 12  2018 at.deny
+-rw-r--r-- 1 root root       2319 Feb 25  2020 bash.bashrc
+-rw-r--r-- 1 root root         45 Jan 26  2020 bash_completion
+drwxr-xr-x 2 root root       4096 Aug 20 03:12 bash_completion.d
+-rw-r--r-- 1 root root        367 Apr 15  2020 bindresvport.blacklist
+drwxr-xr-x 2 root root       4096 Apr 22  2020 binfmt.d
+drwxr-xr-x 2 root root       4096 Aug 20 03:12 byobu
+drwxr-xr-x 3 root root       4096 Aug 20 03:10 ca-certificates
+-rw-r--r-- 1 root root       6569 Aug 20 03:11 ca-certificates.conf
+-rw-r--r-- 1 root root       5713 Aug 20 03:10 ca-certificates.conf.dpkg-old
+drwxr-xr-x 2 root root       4096 Aug 20 03:12 calendar
+drwxr-xr-x 4 root root       4096 Aug 20 03:13 cloud
+drwxr-xr-x 2 root root       4096 Aug 20 03:13 console-setup
+drwxr-xr-x 2 root root       4096 Aug 20 03:12 cron.d
+drwxr-xr-x 2 root root       4096 Aug 20 03:13 cron.daily
+drwxr-xr-x 2 root root       4096 Aug 20 03:10 cron.hourly
+drwxr-xr-x 2 root root       4096 Aug 20 03:10 cron.monthly
+drwxr-xr-x 2 root root       4096 Aug 20 03:13 cron.weekly
+-rw-r--r-- 1 root root       1042 Feb 14  2020 crontab
+drwxr-xr-x 2 root root       4096 Aug 20 03:12 cryptsetup-initramfs
+-rw-r--r-- 1 root root         54 Aug 20 03:11 crypttab
+drwxr-xr-x 4 root root       4096 Aug 20 03:10 dbus-1
+drwxr-xr-x 3 root root       4096 Aug 20 03:11 dconf
+-rw-r--r-- 1 root root       2969 Aug  3  2019 debconf.conf
+-rw-r--r-- 1 root root         13 Dec  5  2019 debian_version
+drwxr-xr-x 3 root root       4096 Aug 20 03:22 default
+-rw-r--r-- 1 root root        604 Sep 16  2018 deluser.conf
+drwxr-xr-x 2 root root       4096 Aug 20 03:10 depmod.d
+drwxr-xr-x 4 root root       4096 Aug 20 03:11 dhcp
+drwxr-xr-x 4 root root       4096 Aug 20 03:10 dpkg
+-rw-r--r-- 1 root root        685 Feb 14  2020 e2scrub.conf
+-rw-r--r-- 1 root root         33 Aug 20 03:13 ec2_version
+-rw-r--r-- 1 root root        106 Aug 20 03:10 environment
+-rw-r--r-- 1 root root       1816 Dec 27  2019 ethertypes
+drwxr-xr-x 4 root root       4096 Aug 20 03:50 fonts
+-rw-r--r-- 1 root root         43 Aug 20 03:13 fstab
+-rw-r--r-- 1 root root        280 Jun 20  2014 fuse.conf
+drwxr-xr-x 3 root root       4096 Aug 20 03:12 fwupd
+-rw-r--r-- 1 root root       2584 Feb  1  2020 gai.conf
+drwxr-xr-x 2 root root       4096 Aug 20 03:12 groff
+-rw-r--r-- 1 root root        864 Oct 30 15:33 group
+-rw-r--r-- 1 root root        848 Oct 30 15:33 group-
+-rw-r----- 1 root shadow      725 Oct 30 15:33 gshadow
+-rw-r----- 1 root shadow      712 Oct 30 15:33 gshadow-
+drwxr-xr-x 3 root root       4096 Aug 20 03:11 gss
+-rw-r--r-- 1 root root       5060 Aug 21  2019 hdparm.conf
+-rw-r--r-- 1 root root         92 Dec  5  2019 host.conf
+-rw-r--r-- 1 root root         16 Nov 15 18:51 hostname
+-rw-r--r-- 1 root root        427 Nov 15 18:51 hosts
+-rw-r--r-- 1 root root        411 Aug 20 03:12 hosts.allow
+-rw-r--r-- 1 root root        711 Aug 20 03:12 hosts.deny
+drwxr-xr-x 2 root root       4096 Oct 30 15:33 init.d
+drwxr-xr-x 5 root root       4096 Aug 20 03:12 initramfs-tools
+-rw-r--r-- 1 root root       1748 Feb 25  2020 inputrc
+drwxr-xr-x 2 root root       4096 Oct 30 15:33 insserv.conf.d
+drwxr-xr-x 4 root root       4096 Aug 20 03:10 iproute2
+drwxr-xr-x 2 root root       4096 Aug 20 03:12 iscsi
+-rw-r--r-- 1 root root         26 Aug  4 20:23 issue
+-rw-r--r-- 1 root root         19 Aug  4 20:23 issue.net
+drwxr-xr-x 5 root root       4096 Aug 20 03:11 kernel
+-rw-r--r-- 1 root root        110 Aug 20 03:11 kernel-img.conf
+drwxrwxr-x 2 root landscape  4096 Aug 28  2020 landscape
+-rw-r--r-- 1 root root      31333 Nov 15 18:51 ld.so.cache
+-rw-r--r-- 1 root root         34 Apr 15  2020 ld.so.conf
+drwxr-xr-x 2 root root       4096 Oct 30 11:35 ld.so.conf.d
+drwxr-xr-x 2 root root       4096 Aug 20 03:12 ldap
+-rw-r--r-- 1 root root        267 Dec  5  2019 legal
+-rw-r--r-- 1 root root        191 Feb 18  2020 libaudit.conf
+drwxr-xr-x 3 root root       4096 Aug 20 03:11 libblockdev
+-rw-r--r-- 1 root root       2996 Apr 15  2020 locale.alias
+-rw-r--r-- 1 root root       9440 Aug 20 03:13 locale.gen
+lrwxrwxrwx 1 root root         33 Nov 15 18:51 localtime -> /usr/share/zoneinfo/Asia/Calcutta
+drwxr-xr-x 4 root root       4096 Aug 20 03:11 logcheck
+-rw-r--r-- 1 root root      10550 Feb  7  2020 login.defs
+-rw-r--r-- 1 root root        533 Jan 21  2019 logrotate.conf
+drwxr-xr-x 2 root root       4096 Aug 20 03:12 logrotate.d
+-rw-r--r-- 1 root root        104 Aug  4 20:23 lsb-release
+-rw-r--r-- 1 root root      14867 Feb  1  2019 ltrace.conf
+drwxr-xr-x 3 root root       4096 Aug 20 03:12 lvm
+-r--r--r-- 1 root root          0 Aug 20 03:13 machine-id
+-rw-r--r-- 1 root root        111 Jan 17  2020 magic
+-rw-r--r-- 1 root root        111 Jan 17  2020 magic.mime
+-rw-r--r-- 1 root root       3688 Oct 31 12:18 mailcap
+-rw-r--r-- 1 root root        449 Oct 19  2019 mailcap.order
+-rw-r--r-- 1 root root         28 Oct 30 15:33 mailname
+-rw-r--r-- 1 root root       5215 Feb 25  2020 manpath.config
+drwxr-xr-x 2 root root       4096 Aug 20 03:12 mdadm
+-rw-r--r-- 1 root root      24546 Oct 19  2019 mime.types
+-rw-r--r-- 1 root root        808 Feb 14  2020 mke2fs.conf
+drwxr-xr-x 2 root root       4096 Aug 20 03:12 modprobe.d
+-rw-r--r-- 1 root root        195 Aug 20 03:10 modules
+drwxr-xr-x 2 root root       4096 Aug 20 03:10 modules-load.d
+lrwxrwxrwx 1 root root         19 Aug 20 03:10 mtab -> ../proc/self/mounts
+-rw-r--r-- 1 root root         41 Apr  6  2020 multipath.conf
+drwxr-xr-x 3 root root       4096 Oct 30 15:33 mysql
+-rw-r--r-- 1 root root      10037 Feb  7  2020 nanorc
+drwxr-xr-x 2 root root       4096 Apr 16  2020 netplan
+drwxr-xr-x 5 root root       4096 Oct 30 15:33 network
+drwxr-xr-x 8 root root       4096 Aug 20 03:10 networkd-dispatcher
+-rw-r--r-- 1 root root         91 Dec  5  2019 networks
+drwxr-xr-x 2 root root       4096 Aug 20 03:10 newt
+-rw-r--r-- 1 root root        510 Aug 20 03:10 nsswitch.conf
+drwxr-xr-x 2 root root       4096 Aug 20 03:10 opt
+lrwxrwxrwx 1 root root         21 Aug  4 20:23 os-release -> ../usr/lib/os-release
+-rw-r--r-- 1 root root       6920 Feb 25  2020 overlayroot.conf
+-rw-r--r-- 1 root root        112 Aug 20 03:13 overlayroot.local.conf
+-rw-r--r-- 1 root root        552 Dec 17  2019 pam.conf
+drwxr-xr-x 2 root root       4096 Aug 20 03:12 pam.d
+-rw-r--r-- 1 root root       1695 Oct 30 15:33 passwd
+-rw-r--r-- 1 root root       1695 Oct 30 15:33 passwd-
+drwxr-xr-x 3 root root       4096 Aug 20 03:11 perl
+drwxr-xr-x 4 root root       4096 Aug 20 03:11 pki
+drwxr-xr-x 3 root root       4096 Aug 20 03:11 pm
+drwxr-xr-x 4 root root       4096 Aug 20 03:11 polkit-1
+drwxr-xr-x 2 root root       4096 Aug 20 03:12 pollinate
+-rw-r--r-- 1 root root          0 Aug 20 03:13 popularity-contest.conf
+drwxr-xr-x 5 root root       4096 Oct 30 15:34 postfix
+drwxr-xr-x 4 root root       4096 Oct 30 15:33 ppp
+-rw-r--r-- 1 root root        581 Dec  5  2019 profile
+drwxr-xr-x 2 root root       4096 Aug 20 03:50 profile.d
+-rw-r--r-- 1 root root       2932 Apr  2  2013 protocols
+drwxr-xr-x 3 root root       4096 Aug 20 03:50 pulse
+drwxr-xr-x 2 root root       4096 Aug 20 03:10 python3
+drwxr-xr-x 2 root root       4096 Aug 20 03:11 python3.8
+drwxr-xr-x 2 root root       4096 Oct 30 15:34 rc0.d
+drwxr-xr-x 2 root root       4096 Oct 30 15:34 rc1.d
+drwxr-xr-x 2 root root       4096 Oct 30 15:34 rc2.d
+drwxr-xr-x 2 root root       4096 Oct 30 15:34 rc3.d
+drwxr-xr-x 2 root root       4096 Oct 30 15:34 rc4.d
+drwxr-xr-x 2 root root       4096 Oct 30 15:34 rc5.d
+drwxr-xr-x 2 root root       4096 Oct 30 15:34 rc6.d
+drwxr-xr-x 2 root root       4096 Aug 20 03:50 rcS.d
+lrwxrwxrwx 1 root root         20 Nov 15 18:51 resolv.conf -> /mnt/wsl/resolv.conf
+drwxr-xr-x 3 root root       4096 Oct 30 15:33 resolvconf
+lrwxrwxrwx 1 root root         13 Dec 16  2020 rmt -> /usr/sbin/rmt
+-rw-r--r-- 1 root root        887 Apr  1  2013 rpc
+-rw-r--r-- 1 root root       1382 Feb 11  2020 rsyslog.conf
+drwxr-xr-x 2 root root       4096 Oct 30 15:33 rsyslog.d
+-rw-r--r-- 1 root root       3663 Jun 20  2016 screenrc
+drwxr-xr-x 4 root root       4096 Aug 20 03:10 security
+drwxr-xr-x 2 root root       4096 Aug 20 03:10 selinux
+drwxr-xr-x 2 root root       4096 Aug 20 03:50 sensors.d
+-rw-r--r-- 1 root root      10593 Nov  7  2019 sensors3.conf
+-rw-r--r-- 1 root root      14464 Feb 17  2020 services
+-rw-r----- 1 root shadow     1004 Oct 30 15:33 shadow
+-rw-r----- 1 root shadow     1004 Oct 30 15:33 shadow-
+-rw-r--r-- 1 root root        146 Aug 20 03:12 shells
+drwxr-xr-x 2 root root       4096 Aug 20 03:10 skel
+drwxr-xr-x 6 root root       4096 Aug 20 03:12 sos
+drwxr-xr-x 4 root root       4096 Aug 20 03:13 ssh
+drwxr-xr-x 4 root root       4096 Aug 20 03:11 ssl
+-rw-r--r-- 1 root root         20 Oct 30 11:41 subgid
+-rw-r--r-- 1 root root          0 Aug 20 03:10 subgid-
+-rw-r--r-- 1 root root         20 Oct 30 11:41 subuid
+-rw-r--r-- 1 root root          0 Aug 20 03:10 subuid-
+-r--r----- 1 root root        755 Feb  3  2020 sudoers
+drwxr-xr-x 2 root root       4096 Aug 20 03:11 sudoers.d
+-rw-r--r-- 1 root root       2351 Feb 14  2020 sysctl.conf
+drwxr-xr-x 2 root root       4096 Aug 20 03:13 sysctl.d
+drwxr-xr-x 5 root root       4096 Aug 20 03:09 systemd
+drwxr-xr-x 2 root root       4096 Aug 20 03:10 terminfo
+-rw-r--r-- 1 root root         14 Nov 15 18:51 timezone
+drwxr-xr-x 2 root root       4096 Aug 20 03:12 tmpfiles.d
+drwxr-xr-x 2 root root       4096 Aug 20 03:11 ubuntu-advantage
+-rw-r--r-- 1 root root       1260 Dec 14  2018 ucf.conf
+drwxr-xr-x 4 root root       4096 Aug 20 03:10 udev
+drwxr-xr-x 2 root root       4096 Aug 20 03:12 udisks2
+drwxr-xr-x 3 root root       4096 Aug 20 03:12 ufw
+drwxr-xr-x 3 root root       4096 Aug 20 03:12 update-manager
+drwxr-xr-x 2 root root       4096 Aug 20 03:13 update-motd.d
+drwxr-xr-x 2 root root       4096 Aug  5 19:31 update-notifier
+drwxr-xr-x 2 root root       4096 Aug 20 03:10 vim
+drwxr-xr-x 4 root root       4096 Aug 20 03:12 vmware-tools
+lrwxrwxrwx 1 root root         23 Aug 20 03:10 vtrgb -> /etc/alternatives/vtrgb
+drwxr-xr-x 5 root root       4096 Aug 20 03:50 vulkan
+-rw-r--r-- 1 root root       4942 Jul 25  2019 wgetrc
+-rw-r--r-- 1 root root        642 Sep 24  2019 xattr.conf
+drwxr-xr-x 4 root root       4096 Aug 20 03:10 xdg
+-rw-r--r-- 1 root root        477 Oct  7  2019 zsh_command_not_found
 
 
 
